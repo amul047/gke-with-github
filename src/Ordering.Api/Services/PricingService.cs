@@ -36,8 +36,16 @@ namespace Ordering.Api.Services
             }
 
             _pricingServiceLogger.LogInformation($"Pricing service is calling supplier API to get price for {orderItem}");
-            var restClient = new RestClient(_supplierApiSettings.Url);
-            return restClient.Get<decimal>(new RestRequest($"/prices?supplierItem={orderItem}")).Data;
+            try
+            {
+                var restClient = new RestClient(_supplierApiSettings.Url);
+                return restClient.Get<decimal>(new RestRequest($"/prices?supplierItem={orderItem}")).Data;
+            }
+            catch (Exception exception)
+            {
+                _pricingServiceLogger.LogError(exception, "An exception occurred calling Supplier API");
+                throw;
+            }
         }
     }
 }
