@@ -35,11 +35,13 @@ namespace Ordering.Api.Services
                 return _random.Next(1, 1000);
             }
 
-            _pricingServiceLogger.LogInformation($"Pricing service is calling supplier API to get price for {orderItem}");
+            _pricingServiceLogger.LogInformation($"Pricing service is calling supplier API at {_supplierApiSettings.Url} to get price for {orderItem}");
             try
             {
                 var restClient = new RestClient(_supplierApiSettings.Url);
-                return restClient.Get<decimal>(new RestRequest($"/prices?supplierItem={orderItem}")).Data;
+                var response = restClient.Get<decimal>(new RestRequest($"/prices?supplierItem={orderItem}"));
+                _pricingServiceLogger.LogInformation($"Supplier API responded with status code {response.StatusCode}");
+                return response.Data;
             }
             catch (Exception exception)
             {
