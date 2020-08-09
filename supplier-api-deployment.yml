@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: supplier-api
+  labels:
+    app: supplier-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: supplier-api
+  template:
+    metadata:
+      labels:
+        app: supplier-api
+    spec:
+      containers:
+      - name: supplier-api
+        image: asia.gcr.io/gke-with-github/supplierapi:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 6000
