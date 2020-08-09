@@ -1,9 +1,14 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ordering-api
+  labels:
+    app: ordering-api
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ordering-api
   template:
     metadata:
       labels:
@@ -11,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ordering-api
-        image: amul047/orderingapi:latest
-        imagePullPolicy: IfNotPresent
+        image: asia.gcr.io/gke-with-github/orderingapi:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
