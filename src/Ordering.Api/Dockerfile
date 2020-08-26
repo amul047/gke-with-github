@@ -6,7 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Ordering.Api.csproj", ""]
+COPY ["src/Ordering.Api/Ordering.Api.csproj", ""]
 RUN dotnet restore "./Ordering.Api.csproj"
 COPY . .
 WORKDIR "/src/."
