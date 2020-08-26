@@ -22,7 +22,8 @@ env:
   GITHUB_SHA: ${{ github.sha }}
   GKE_ZONE: australia-southeast1-b	
   GKE_CLUSTER: ordering-cluster
-  IMAGE: orderingapi
+  ORDERING_API_IMAGE: orderingapi
+  SUPPLIER_API_IMAGE: supplierapi
   REGISTRY_HOSTNAME: asia.gcr.io
   DEPLOYMENT_NAME: ordering-deployment
 
@@ -48,18 +49,31 @@ jobs:
         # via gcloud command-line tool.
         gcloud auth configure-docker
       
-    # Build the Docker image
+    # Build the Docker image for Ordering API
     - name: Build
       run: |        
-        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
+        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$ORDERING_API_IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" src/Ordering.Api
 
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
-        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
+        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$ORDERING_API_IMAGE:$GITHUB_SHA
 
+      
+    # Build the Docker image for Supplier API
+    - name: Build
+      run: |        
+        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$SUPPLIER_API_IMAGE":"$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" src/Supplier.Api
+
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |
+        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$SUPPLIER_API_IMAGE:$GITHUB_SHA
+        
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
