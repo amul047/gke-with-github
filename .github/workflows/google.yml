@@ -25,7 +25,8 @@ env:
   ORDERING_API_IMAGE: orderingapi
   SUPPLIER_API_IMAGE: supplierapi
   REGISTRY_HOSTNAME: asia.gcr.io
-  DEPLOYMENT_NAME: ordering-deployment
+  ORDERING_DEPLOYMENT_NAME: ordering-api
+  SUPPLIER_DEPLOYMENT_NAME: supplier-api
 
 jobs:
   setup-build-publish-deploy:
@@ -79,5 +80,6 @@ jobs:
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
         kubectl apply -f .
-        kubectl rollout status deployment/$DEPLOYMENT_NAME
+        kubectl rollout status deployment/$ORDERING_DEPLOYMENT_NAME
+        kubectl rollout status deployment/$SUPPLIER_DEPLOYMENT_NAME
         kubectl get services -o wide
