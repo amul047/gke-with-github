@@ -34,49 +34,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Checkout
+    - name: Checkout source code
       uses: actions/checkout@v2
 
-    # Setup gcloud CLI
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - name: Setup gcloud CLI
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '270.0.0'
         service_account_email: ${{ secrets.GKE_EMAIL }}
         service_account_key: ${{ secrets.GKE_KEY }}
 
-    # Configure docker to use the gcloud command-line tool as a credential helper
-    - run: |
+    - name: Setup docker to authenticate
+      run: |
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
       
-    # Build the Docker image for Ordering API
-    - name: Build
+    - name: Build the Docker image for Ordering API 
       run: |        
         docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$ORDERING_API_IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" src/Ordering.Api
 
-    # Push the Docker image to Google Container Registry
-    - name: Publish
+    - name: Push the Docker image to Google Container Registry
       run: |
         docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$ORDERING_API_IMAGE:$GITHUB_SHA
 
-      
-    # Build the Docker image for Supplier API
-    - name: Build
+    - name: Build the Docker image for Supplier API
       run: |        
         docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$SUPPLIER_API_IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" src/Supplier.Api
 
-    # Push the Docker image to Google Container Registry
-    - name: Publish
+    - name: Push the Docker image to Google Container Registry
       run: |
         docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$SUPPLIER_API_IMAGE:$GITHUB_SHA
         
-    # Deploy the Docker image to the GKE cluster
-    - name: Deploy
+    - name: Deploy the Docker image to the GKE cluster
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
         kubectl apply -f .
