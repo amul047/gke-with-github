@@ -11,6 +11,8 @@ namespace Ordering.Api
 {
     public class Startup
     {
+        public const string AllowAnyOriginPolicy = "AllowAnyOriginPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,6 +23,17 @@ namespace Ordering.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options =>
+                {
+                    options.AddPolicy(
+                        AllowAnyOriginPolicy,
+                        builder =>
+                        {
+                            builder.AllowAnyOrigin();
+                        });
+                });
+
             services.AddControllers();
 
             services.AddScoped<IPricingService, PricingService>();
@@ -36,6 +49,8 @@ namespace Ordering.Api
             }
 
             app.UseRouting();
+
+            app.UseCors(AllowAnyOriginPolicy);
 
             app.UseAuthorization();
 
