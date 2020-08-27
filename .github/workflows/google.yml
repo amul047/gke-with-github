@@ -73,6 +73,7 @@ jobs:
     - name: Deploy the Docker image to the GKE cluster
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
+        kubectl delete -f .
         kubectl apply -f .
         kubectl rollout status deployment/$ORDERING_DEPLOYMENT_NAME
         kubectl rollout status deployment/$SUPPLIER_DEPLOYMENT_NAME
