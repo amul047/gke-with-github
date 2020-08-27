@@ -41,7 +41,6 @@ namespace Ordering.Api.Services
                 var restClient = new RestClient(_supplierApiSettings.Url);
                 var response = restClient.Get<decimal>(new RestRequest($"/prices?supplierItem={orderItem}"));
                 _pricingServiceLogger.LogInformation($"Supplier API responded with status code {response.StatusCode}");
-
                 _pricingServiceLogger.LogInformation($"Supplier cost for {orderItem} is {response.Data}");
                 return response.Data;
             }
