@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordering-fe
+  labels:
+    app: ordering-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ordering-fe
+  template:
+    metadata:
+      labels:
+        app: ordering-fe
+    spec:
+      containers:
+      - name: ordering-fe
+        image: asia.gcr.io/gke-with-github/orderingfe:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080

@@ -16,7 +16,7 @@
     },
     methods: {
       async getOrders() {
-        this.orders = JSON.stringify(await axios.get("http://localhost:5000/orders"));
+        this.orders = JSON.stringify(await axios.get("http://ordering-api-service:5000/orders"));
       }
     },
     async mounted() {
