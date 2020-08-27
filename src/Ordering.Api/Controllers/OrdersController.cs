@@ -36,7 +36,7 @@ namespace Ordering.Api.Controllers
             {
                 new Order
                 {
-                    Supplier = "KMart",
+                    Supplier = "ABCMart",
                     OrderItems = orderItems,
                     Total = total
                 }
