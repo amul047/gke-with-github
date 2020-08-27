@@ -52,23 +52,23 @@ jobs:
       
     - name: Build the Docker image for Ordering API 
       run: |        
-        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$ORDERING_API_IMAGE":"$GITHUB_SHA" \
+        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$ORDERING_API_IMAGE":latest \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" src/Ordering.Api
 
     - name: Push the Docker image to Google Container Registry
       run: |
-        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$ORDERING_API_IMAGE:$GITHUB_SHA
+        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$ORDERING_API_IMAGE:latest
 
     - name: Build the Docker image for Supplier API
       run: |        
-        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$SUPPLIER_API_IMAGE":"$GITHUB_SHA" \
+        docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$SUPPLIER_API_IMAGE":latest \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" src/Supplier.Api
 
     - name: Push the Docker image to Google Container Registry
       run: |
-        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$SUPPLIER_API_IMAGE:$GITHUB_SHA
+        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$SUPPLIER_API_IMAGE:latest
         
     - name: Deploy the Docker image to the GKE cluster
       run: |
