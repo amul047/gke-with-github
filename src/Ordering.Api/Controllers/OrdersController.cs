@@ -31,6 +31,7 @@ namespace Ordering.Api.Controllers
             };
             var total = orderItems.Select(orderItem => _pricingService.GetPricing(orderItem))
                 .Sum();
+            _logger.LogInformation($"Total is {total}");
             return new List<Order>
             {
                 new Order
