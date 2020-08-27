@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ordering-api
-        image: asia.gcr.io/gke-with-github/orderingapi:latest
+        image: asia.gcr.io/gke-with-github/orderingapi
         imagePullPolicy: Always
         ports:
         - containerPort: 5000

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: supplier-api
-        image: asia.gcr.io/gke-with-github/supplierapi:latest
+        image: asia.gcr.io/gke-with-github/supplierapi
         imagePullPolicy: Always
         ports:
         - containerPort: 6000
