@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta6
+kind: Config
+metadata:
+  name: gke-with-github
+build:
+  artifacts:
+  - image: asia.gcr.io/gke-with-github/orderingapi
+    context: src\Ordering.Api
+  - image: asia.gcr.io/gke-with-github/supplierapi
+    context: src\Supplier.Api
+deploy:
+  kubectl:
+    manifests:
+    - ordering-api-deployment.yml
+    - ordering-service-deployment.yml
+    - supplier-api-deployment.yml
+    - supplier-service-deployment.yml

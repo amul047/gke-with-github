@@ -19,7 +19,7 @@ namespace Supplier.Api.Controllers
         public decimal Get([FromQuery] string supplierItem)
         {
             _logger.LogInformation($"GET /Prices requested for {supplierItem}");
-            return new decimal(100);
+            return new decimal(1000);
         }
     }
 }

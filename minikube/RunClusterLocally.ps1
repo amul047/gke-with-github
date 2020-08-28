@@ -1,9 +1,8 @@
-Write-Host "-----------------------------starting minikube-----------------------------" -ForegroundColor white
+Write-Host "-----------------------------starting minikube-----------------------" -ForegroundColor white
 minikube start
 
-Write-Host "-----------------------------recreating cluster----------------------------" -ForegroundColor yellow
-kubectl delete -f ../
-kubectl apply -f ../
+Write-Host "-----------------------------run skaffold----------------------------" -ForegroundColor green
+cd ..
+skaffold dev
+cd minikube
 
-Write-Host "-----------------------------get local ordering api url--------------------" -ForegroundColor green
-minikube service ordering-api-service --url
