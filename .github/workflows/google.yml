@@ -70,7 +70,7 @@ jobs:
       run: |
         docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$SUPPLIER_API_IMAGE:latest
         
-    - name: Deploy the Docker image to the GKE cluster
+    - name: Deploy the APIs to the GKE cluster
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
         kubectl delete -f supplier-api-deployment.yml
