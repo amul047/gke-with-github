@@ -1,8 +1,18 @@
 {
+  "Docker": {
+    "commandName": "Docker",
+    "launchBrowser": true,
+    "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/prices?supplierItem=pen",
+    "publishAllPorts": true
+  },
+  "profiles": {
+    "Supplier.Api": {
+      "commandName": "Project"
+    },
     "Docker": {
       "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/prices?supplierItem=pen",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true
     }
+  }
 }

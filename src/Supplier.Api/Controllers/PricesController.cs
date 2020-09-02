@@ -6,6 +6,7 @@ namespace Supplier.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Route("")]
     public class PricesController : ControllerBase
     {
         private readonly ILogger<PricesController> _logger;
@@ -19,7 +20,7 @@ namespace Supplier.Api.Controllers
         public decimal Get([FromQuery] string supplierItem)
         {
             _logger.LogInformation($"GET /Prices requested for {supplierItem}");
-            return new decimal(14);
+            return new decimal(100);
         }
     }
 }

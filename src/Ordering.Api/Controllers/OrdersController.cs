@@ -8,6 +8,7 @@ namespace Ordering.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Route("")]
     public class OrdersController : ControllerBase
     {
         private readonly ILogger<OrdersController> _logger;
