@@ -73,7 +73,14 @@ jobs:
     - name: Deploy the Docker image to the GKE cluster
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-        kubectl apply -f .\*deployment.yaml
+        # kubectl delete -f supplier-api-deployment.yml
+        # kubectl delete -f ordering-api-deployment.yml
+        # kubectl delete -f supplier-service-deployment.yml
+        # kubectl delete -f ordering-service-deployment.yml
+        kubectl create -f supplier-api-deployment.yml
+        kubectl create -f ordering-api-deployment.yml
+        kubectl create -f supplier-service-deployment.yml
+        kubectl create -f ordering-service-deployment.yml
         kubectl rollout status deployment/$ORDERING_DEPLOYMENT_NAME
         kubectl rollout status deployment/$SUPPLIER_DEPLOYMENT_NAME
         kubectl get services -o wide
